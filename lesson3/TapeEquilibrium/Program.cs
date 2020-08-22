@@ -30,15 +30,9 @@ class Solution
         System.Console.WriteLine(result);
         System.Console.WriteLine(result == expected);
 
-        array = new int[] { };
+        array = new int[] { 1000, -1000 };
         result = solution(array);
-        expected = 0;
-        System.Console.WriteLine(result);
-        System.Console.WriteLine(result == expected);
-
-        array = new int[] { 12 };
-        result = solution(array);
-        expected = 0;
+        expected = 2000;
         System.Console.WriteLine(result);
         System.Console.WriteLine(result == expected);
 
@@ -51,18 +45,18 @@ class Solution
 
     public static int solution(int[] A)
     {
-        Int64 sumP1 = A.Sum();
-        Int64 sumP2 = 0;
-        Int64 bestResult = Int64.MaxValue;
-        Int64 result = 0;
-        for (int i = 0; i < A.Length; i++)
-        {
-            sumP1 -= A[i];
-            sumP2 += A[i];
-            result = Math.Abs(sumP1 - sumP2);
+        long sumP1 = 0;
+        long sumP2 = A.Sum();
+        long bestResult = Int64.MaxValue;
+        long result = 0;
 
-            if (result < Math.Abs(bestResult)) bestResult = result;
+        for (int i = 0; i < A.Length - 1; i++)
+        {
+            sumP1 += A[i];
+            sumP2 -= A[i];
+            result = Math.Abs(sumP1 - sumP2);
+            if (Math.Abs(result) < Math.Abs(bestResult)) bestResult = result;
         }
-        return (int)bestResult;
+        return (int)Math.Abs(bestResult);
     }
 }
