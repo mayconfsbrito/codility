@@ -43,10 +43,10 @@ namespace console.lesson4.MaxCounters
             System.Console.WriteLine($"{testeResult}");
 
             A = Enumerable.Range(1, 1000000).ToArray();
-            A[5] = 1;
-            A[9] = 1;
-            A[99] = 2;
-            N = 2;
+            N = 200000;
+            A[5] = N + 1;
+            A[9] = N + 1;
+            A[99] = N + 2;
             expected = Enumerable.Repeat(4, N).ToArray();
             result = solution(N, A);
             testeResult = Enumerable.SequenceEqual(result, expected);
@@ -57,6 +57,7 @@ namespace console.lesson4.MaxCounters
         {
             var resultArray = new int[N];
             var countMaxValue = 0;
+            var lastResetValue = 0;
 
             for (int i = 0; i < A.Length; i++)
             {
@@ -65,12 +66,18 @@ namespace console.lesson4.MaxCounters
                 {
                     var position = value - 1;
                     ++resultArray[position];
+                    if (resultArray[position] <= lastResetValue) resultArray[position] = lastResetValue + 1;
                     if (resultArray[position] > countMaxValue) countMaxValue = resultArray[position];
                 }
                 else
                 {
-                    resultArray = Enumerable.Repeat(countMaxValue, N).ToArray();
+                    lastResetValue = countMaxValue;
                 }
+            }
+
+            for (int i = 0; i < resultArray.Length; i++)
+            {
+                if (resultArray[i] < lastResetValue) resultArray[i] = lastResetValue;
             }
 
             return resultArray;
