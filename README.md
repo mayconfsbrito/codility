@@ -1,2 +1,2 @@
 # codility
-Solutions of my lessons on http://codility.com using Mono and C# 6
+Solutions of my lessons on http://codility.com using Mono 6.8 and C# 6
